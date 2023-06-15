@@ -8,6 +8,7 @@ const Navbar = () => {
         <Box sx={{ flexGrow: 1 }}>
           <Button href="/">Home</Button>
           <Button href="/spells">All spells</Button>
+          <Button href="/myspells">My spellbook</Button>
         </Box>
       </Toolbar>
     </AppBar>

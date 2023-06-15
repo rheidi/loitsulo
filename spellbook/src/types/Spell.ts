@@ -1,4 +1,5 @@
 export interface Spell{
+  slug: string
   name: string
   desc: string
   higher_level: string
