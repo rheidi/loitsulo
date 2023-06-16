@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
 
 const MySpells = () => {
-  const { selectedSpells, setSelectedSpells } = useContext(SpellContext)
+  const { selectedSpells } = useContext(SpellContext)
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant='h1'>My spellbook</Typography>
