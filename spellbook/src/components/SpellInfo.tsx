@@ -1,6 +1,6 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react'
 import { Spell } from '../types/Spell'
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
+import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
 interface SpellInfoProps {

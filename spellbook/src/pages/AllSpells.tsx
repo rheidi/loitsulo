@@ -1,6 +1,6 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useGetSpellsList } from '../components/getSpells'
 import { Spell } from '../types/Spell'
 import SpellContext from '../components/SpellContext'
