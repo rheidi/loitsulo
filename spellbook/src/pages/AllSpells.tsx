@@ -1,9 +1,10 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
-import React, { useContext } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react'
 import { useGetSpellsList } from '../components/getSpells'
 import { Spell } from '../types/Spell'
 import SpellContext from '../components/SpellContext'
+import { SpellInfo } from '../components/SpellInfo';
 
 const AllSpells = () => {
   const spellsRes = useGetSpellsList('https://api.open5e.com/spells/?limit=100')
@@ -21,16 +22,22 @@ const AllSpells = () => {
         newSelectedSpells = [...prevSelectedSpells, s]
       }
 
-      console.log(newSelectedSpells)
       return newSelectedSpells
     })
+  }
+  const [open, setOpen] = useState(false)
+  const [activeSpell, setActiveSpell] = useState<Spell>()
+
+  const handleClickOpen = (s: Spell) => () => {
+    setActiveSpell(s)
+    setOpen(true)
   }
 
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant='h1'>Spells</Typography>
       <Typography variant='body1'>All the spells in the world.</Typography>
-      <List sx={{width: 400}}>
+      <List sx={{width: 360}}>
         {(typeof spells === 'undefined') ?
         (<p>Loading...</p>
         ) : (
@@ -38,9 +45,12 @@ const AllSpells = () => {
           <ListItem
             key={spell.slug}
             secondaryAction={
-              <IconButton edge='end'>
-                <InfoOutlinedIcon />
-              </IconButton>
+              <>
+                <IconButton edge='end' onClick={handleClickOpen(spell)}>
+                  <InfoOutlinedIcon />
+                </IconButton>
+                <SpellInfo spell={activeSpell} open={open} setOpen={setOpen} />
+              </>
             }
             disablePadding>
             <ListItemButton role='undefined' onClick={handleToggle(spell)} dense>
@@ -52,8 +62,8 @@ const AllSpells = () => {
                   disableRipple
                 />
               </ListItemIcon>
+              <ListItemText primary={spell.name} />
             </ListItemButton>
-            <ListItemText sx={{ lm: -2 }} primary={spell.name} />
           </ListItem>
           )
         )}

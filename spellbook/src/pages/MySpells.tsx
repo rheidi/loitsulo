@@ -20,12 +20,18 @@ const MySpells = () => {
               <Grid item key={s.slug} width={300}>
                 <Card>
                   <CardContent>
-                    <Typography gutterBottom variant="h5">{s.name}</Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">{s.level} {s.school}</Typography>
-                    <Typography variant="body2">
+                    <Typography variant="h5">{s.name}</Typography>
+                    <Typography sx={{ mb: 1.2 }} color="text.secondary">{s.level} {s.school.toLowerCase()}</Typography>
+                    <Typography gutterBottom variant="body2">
                       Casting time: {s.casting_time}<br />
                       Range: {s.range}<br />
                       Components: {s.components}<br />
+                      {(s.requires_material_components) ?
+                        (
+                          <Typography variant="body2">Materials: {s.material}<br /></Typography>
+                        ) : (
+                          <></>
+                        )}
                       Duration: {s.duration}<br />
                     </Typography>
                     <Typography paragraph>{s.desc}</Typography>
