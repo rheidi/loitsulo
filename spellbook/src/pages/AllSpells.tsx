@@ -71,17 +71,17 @@ const AllSpells = () => {
           onChange={onSearchChange}
         />
         <FormControl sx={{p:1, minWidth: 200}}>
-        <InputLabel id='sort'>Class</InputLabel>
-        <Select id='sort' value='none' label='Sort' onChange={onClassChange}>
-          <MenuItem value={''}>none</MenuItem>
-          <MenuItem value={'Bard'}>Bard</MenuItem>
-          <MenuItem value={'Cleric'}>Cleric</MenuItem>
-          <MenuItem value={'Druid'}>Druid</MenuItem>
-          <MenuItem value={'Paladin'}>Paladin</MenuItem>
-          <MenuItem value={'Sorcerer'}>Sorcerer</MenuItem>
-          <MenuItem value={'Warlock'}>Warlock</MenuItem>
-          <MenuItem value={'Wizard'}>Wizard</MenuItem>
-        </Select>
+          <InputLabel id='selectClass'>Class</InputLabel>
+          <Select id='class' value={selectedClass} label='class' onChange={onClassChange}>
+            <MenuItem value={''}>none</MenuItem>
+            <MenuItem value={'Bard'}>Bard</MenuItem>
+            <MenuItem value={'Cleric'}>Cleric</MenuItem>
+            <MenuItem value={'Druid'}>Druid</MenuItem>
+            <MenuItem value={'Paladin'}>Paladin</MenuItem>
+            <MenuItem value={'Sorcerer'}>Sorcerer</MenuItem>
+            <MenuItem value={'Warlock'}>Warlock</MenuItem>
+            <MenuItem value={'Wizard'}>Wizard</MenuItem>
+          </Select>
         </FormControl>
       </Box>
       <List sx={{width: 360}}>
