@@ -122,7 +122,6 @@ const AllSpells = () => {
                 <IconButton edge='end' onClick={handleClickOpen(spell)}>
                   <InfoOutlinedIcon />
                 </IconButton>
-                <SpellInfo spell={activeSpell} open={open} setOpen={setOpen} />
               </>
             }
             disablePadding>
@@ -141,6 +140,7 @@ const AllSpells = () => {
           )
         )}
       </List>
+      <SpellInfo spell={activeSpell} open={open} setOpen={setOpen} />
     </Box>
   )
 }

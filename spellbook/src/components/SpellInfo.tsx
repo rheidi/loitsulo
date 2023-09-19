@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactNode, SetStateAction } from 'react'
+import React, { Dispatch, ReactNode, SetStateAction, useEffect } from 'react'
 import { Spell } from '../types/Spell'
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
@@ -11,10 +11,11 @@ interface SpellInfoProps {
 
 export const SpellInfo = ({spell, open, setOpen}: SpellInfoProps) => {
 
-  if (spell === undefined) {
-    setOpen(false)
-    return null
-  }
+  useEffect(() => {
+    if (spell === undefined) {
+      setOpen(false)
+    }
+  }, [spell, setOpen])
 
   interface SpellDialogTitleProps {
     id: string;
@@ -50,6 +51,10 @@ export const SpellInfo = ({spell, open, setOpen}: SpellInfoProps) => {
     setOpen(false)
   }  
 
+  if (!spell) {
+    return null
+  }
+
   return (
     <Dialog
       onClose={handleClose}
@@ -66,7 +71,7 @@ export const SpellInfo = ({spell, open, setOpen}: SpellInfoProps) => {
           Components: {spell.components}<br />
           {(spell.requires_material_components) ?
             (
-              <Typography variant="body2">{spell.material}<br /></Typography>
+              <Typography component="span" display="inline" variant="body2">{spell.material}<br /></Typography>
             ) : (
               <></>
             )}
