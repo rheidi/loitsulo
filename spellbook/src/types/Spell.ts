@@ -21,4 +21,5 @@ export interface Spell{
   dnd_class: string
   spell_lists: string[]
   circles: string
+  document__slug: string
 }

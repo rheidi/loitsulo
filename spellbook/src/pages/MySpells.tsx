@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, Grid, Link, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Grid, Link, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
 
 const MySpells = () => {
-  const { selectedSpells } = useContext(SpellContext)
+  const { selectedSpells, setSelectedSpells } = useContext(SpellContext)
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant='h1'>My spellbook</Typography>
@@ -15,6 +15,7 @@ const MySpells = () => {
       ) : (
         <Box>
           <Typography variant='h3'>Selected spellz.</Typography>
+          <Button onClick={() => setSelectedSpells([])}>Clear all</Button>
           <Grid container spacing={2} sx={{pt:1}}>
             {selectedSpells.map((s) => (
               <Grid item key={s.slug} width={300}>
@@ -33,6 +34,12 @@ const MySpells = () => {
                           <></>
                         )}
                       Duration: {s.duration}<br />
+                      {(s.requires_concentration) ?
+                        (
+                          <Typography variant="body2">Requires consentration<br /></Typography>
+                        ) : (
+                          <></>
+                        )}
                     </Typography>
                     <Typography paragraph>{s.desc}</Typography>
                   </CardContent>
