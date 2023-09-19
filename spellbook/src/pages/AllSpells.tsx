@@ -6,10 +6,15 @@ import { Spell } from '../types/Spell'
 import SpellContext from '../components/SpellContext'
 import { SpellInfo } from '../components/SpellInfo';
 
-const getFilteredList = (spells: Spell[] | undefined, search: string, selectedClass: string) => {
+const getFilteredList = (spells: Spell[] | undefined, search: string, selectedClass: string, level: string) => {
   if(spells === undefined) return [] //No spells to filter
-  return spells.filter(spell => spell.name.toLowerCase().includes(search.toLocaleLowerCase()) 
-    && spell.dnd_class.includes(selectedClass))
+
+  var filteredSpells = spells.filter(spell => spell.name.toLowerCase().includes(search.toLocaleLowerCase())
+  && spell.dnd_class.includes(selectedClass))
+
+  const lvl = parseInt(level)
+  if (!isNaN(lvl)) filteredSpells = filteredSpells.filter(spell => spell.spell_level === parseInt(level))
+  return filteredSpells
 }
 
 const AllSpells = () => {
@@ -20,12 +25,13 @@ const AllSpells = () => {
   const { selectedSpells, setSelectedSpells } = useContext(SpellContext)
   const [search, setSearch] = useState('')
   const [selectedClass, setSelectedClass] = useState('')
+  const [level, setLevel] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState(search)
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300)
     return () => clearTimeout(timer)
   }, [search])
-  const filteredSpells = getFilteredList(spells, debouncedSearch, selectedClass)
+  const filteredSpells = getFilteredList(spells, debouncedSearch, selectedClass, level)
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
@@ -33,6 +39,10 @@ const AllSpells = () => {
 
   const onClassChange = (e: SelectChangeEvent) => {
     setSelectedClass(e.target.value)    
+  }
+
+  const onLevelChange = (e: SelectChangeEvent) => {
+    setLevel(e.target.value)
   }
 
   const handleToggle = (s: Spell) => () => {
@@ -58,12 +68,12 @@ const AllSpells = () => {
   }
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 1 }}>
       <Typography variant='h1'>Spells</Typography>
       <Typography variant='body1'>All spells in the world.</Typography>
-      <Box sx={{p:1}}>
+      <Box sx={{p:0}}>
         <TextField
-          sx={{p:1, minWidth: 200}}
+          sx={{p:1, width: 200}}
           type='text'
           label='Search'
           id='search'
@@ -83,8 +93,24 @@ const AllSpells = () => {
             <MenuItem value={'Wizard'}>Wizard</MenuItem>
           </Select>
         </FormControl>
+        <FormControl sx={{p:1, minWidth: 100}}>
+          <InputLabel id='selectLevel'>Level</InputLabel>
+          <Select id='level' value={level} label='level' onChange={onLevelChange}>
+            <MenuItem value={''}>none</MenuItem>
+            <MenuItem value={0}>Cantrips</MenuItem>
+            <MenuItem value={1}>1st level</MenuItem>
+            <MenuItem value={2}>2nd level</MenuItem>
+            <MenuItem value={3}>3rd level</MenuItem>
+            <MenuItem value={4}>4th level</MenuItem>
+            <MenuItem value={5}>5th level</MenuItem>
+            <MenuItem value={6}>6th level</MenuItem>
+            <MenuItem value={7}>7th level</MenuItem>
+            <MenuItem value={8}>8th level</MenuItem>
+            <MenuItem value={9}>9th level</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
-      <List sx={{width: 360}}>
+      <List sx={{width: 400}}>
         {(typeof spells === 'undefined') ?
         (<p>Loading...</p>
         ) : (
