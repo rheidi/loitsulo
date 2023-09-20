@@ -1,4 +1,5 @@
-import { Box, Button, Card, CardContent, Grid, Link, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, Grid, IconButton, Link, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
 
@@ -10,18 +11,25 @@ const MySpells = () => {
       {selectedSpells.length === 0 ? (
         <Box>
           <Typography gutterBottom variant='h5'>No spells selected yet</Typography>
-          <Link href='/spells'>Get some spellz here</Link>
+          <Link href='/spells'>Get some spells here</Link>
         </Box>
       ) : (
         <Box>
-          <Typography variant='h3'>Selected spellz.</Typography>
+          <Typography variant='h5'>Selected spells.</Typography>
           <Button onClick={() => setSelectedSpells([])}>Clear all</Button>
           <Grid container spacing={2} sx={{pt:1}}>
             {selectedSpells.map((s) => (
               <Grid item key={s.slug} width={300}>
                 <Card>
+                  <CardHeader
+                    title={s.name}
+                    action={
+                      <IconButton aria-label="settings">
+                        <CloseIcon />
+                      </IconButton>
+                    }
+                  />
                   <CardContent>
-                    <Typography variant="h5">{s.name}</Typography>
                     <Typography sx={{ mb: 1.2 }} color="text.secondary">{s.level} {s.school.toLowerCase()}</Typography>
                     <Typography gutterBottom variant="body2">
                       Casting time: {s.casting_time}<br />

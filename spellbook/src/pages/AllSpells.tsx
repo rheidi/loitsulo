@@ -9,18 +9,18 @@ import { SpellInfo } from '../components/SpellInfo';
 const getFilteredList = (spells: Spell[] | undefined, search: string, selectedClass: string, level: string) => {
   if(spells === undefined) return [] //No spells to filter
 
-  var filteredSpells = spells.filter(spell => spell.name.toLowerCase().includes(search.toLocaleLowerCase())
+  const filteredSpells = spells.filter(spell => spell.name.toLowerCase().includes(search.toLocaleLowerCase())
   && spell.dnd_class.includes(selectedClass))
 
   const lvl = parseInt(level)
-  if (!isNaN(lvl)) filteredSpells = filteredSpells.filter(spell => spell.spell_level === parseInt(level))
+  if (!isNaN(lvl)) return filteredSpells.filter(spell => spell.spell_level === parseInt(level))
   return filteredSpells
 }
 
 const AllSpells = () => {
   const spellsRes = useGetSpellsList(`https://api.open5e.com/spells/?document__slug__iexact=wotc-srd&limit=500`)
-  var spells = spellsRes?.results
-  var count = spellsRes?.count
+  const spells = spellsRes?.results
+  const count = spellsRes?.count
 
   const { selectedSpells, setSelectedSpells } = useContext(SpellContext)
   const [search, setSearch] = useState('')
@@ -68,9 +68,9 @@ const AllSpells = () => {
   }
 
   return (
-    <Box sx={{ p: 1 }}>
+    <Box sx={{ p: 2 }}>
       <Typography variant='h1'>Spells</Typography>
-      <Typography variant='body1'>All spells in the world.</Typography>
+      <Typography variant='h5'>All spells in the world.</Typography>
       <Box sx={{p:0}}>
         <TextField
           sx={{p:1, width: 200}}
