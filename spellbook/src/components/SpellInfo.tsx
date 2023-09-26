@@ -76,7 +76,7 @@ export const SpellInfo = ({spell, open, setOpen}: SpellInfoProps) => {
               <></>
             )}
           Duration: {spell.duration}<br />
-          Requires consentration: {spell.concentration}<br />
+          Requires concentration: {spell.concentration}<br />
           Ritual: {spell.ritual}<br />
         </Typography>
         <Typography paragraph>{spell.desc}</Typography>

@@ -2,9 +2,17 @@ import { Box, Button, Card, CardContent, CardHeader, Grid, IconButton, Link, Typ
 import CloseIcon from '@mui/icons-material/Close'
 import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
+import { Spell } from '../types/Spell'
 
 const MySpells = () => {
   const { selectedSpells, setSelectedSpells } = useContext(SpellContext)
+
+  const handleRemove = (s: Spell) => () => {
+    setSelectedSpells((selectedSpells) => {
+      return selectedSpells.filter((spell) => spell.slug !== s.slug)
+    })
+  }
+
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant='h1'>My spellbook</Typography>
@@ -24,7 +32,7 @@ const MySpells = () => {
                   <CardHeader
                     title={s.name}
                     action={
-                      <IconButton aria-label="settings">
+                      <IconButton role='undefined' onClick={handleRemove(s)} aria-label="remove spell">
                         <CloseIcon />
                       </IconButton>
                     }
@@ -44,7 +52,13 @@ const MySpells = () => {
                       Duration: {s.duration}<br />
                       {(s.requires_concentration) ?
                         (
-                          <Typography variant="body2">Requires consentration<br /></Typography>
+                          <Typography variant="body2">Requires concentration<br /></Typography>
+                        ) : (
+                          <></>
+                        )}
+                      {(s.can_be_cast_as_ritual) ?
+                        (
+                          <Typography variant="body2">Can be cast as a ritual<br /></Typography>
                         ) : (
                           <></>
                         )}
