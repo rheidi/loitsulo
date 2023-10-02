@@ -1,10 +1,11 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Checkbox, FormControl, IconButton, InputLabel, List, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material'
+import { Box, Checkbox, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, SelectChangeEvent, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
-import { useGetSpellsList } from '../components/getSpells'
+import { useGetSpellsList } from '../hooks/getSpells'
 import { Spell } from '../types/Spell'
 import SpellContext from '../components/SpellContext'
 import { SpellInfo } from '../components/SpellInfo';
+import ToolBar from '../components/ToolBar';
 
 const getFilteredList = (spells: Spell[] | undefined, search: string, selectedClass: string, level: string) => {
   if(spells === undefined) return [] //No spells to filter
@@ -71,45 +72,7 @@ const AllSpells = () => {
     <Box sx={{ p: 2 }}>
       <Typography variant='h1'>Spells</Typography>
       <Typography variant='h5'>All spells in the world.</Typography>
-      <Box sx={{p:0}}>
-        <TextField
-          sx={{p:1, width: 200}}
-          type='text'
-          label='Search'
-          id='search'
-          value={search}
-          onChange={onSearchChange}
-        />
-        <FormControl sx={{p:1, minWidth: 200}}>
-          <InputLabel id='selectClass'>Class</InputLabel>
-          <Select id='class' value={selectedClass} label='class' onChange={onClassChange}>
-            <MenuItem value={''}>none</MenuItem>
-            <MenuItem value={'Bard'}>Bard</MenuItem>
-            <MenuItem value={'Cleric'}>Cleric</MenuItem>
-            <MenuItem value={'Druid'}>Druid</MenuItem>
-            <MenuItem value={'Paladin'}>Paladin</MenuItem>
-            <MenuItem value={'Sorcerer'}>Sorcerer</MenuItem>
-            <MenuItem value={'Warlock'}>Warlock</MenuItem>
-            <MenuItem value={'Wizard'}>Wizard</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl sx={{p:1, minWidth: 100}}>
-          <InputLabel id='selectLevel'>Level</InputLabel>
-          <Select id='level' value={level} label='level' onChange={onLevelChange}>
-            <MenuItem value={''}>none</MenuItem>
-            <MenuItem value={0}>Cantrips</MenuItem>
-            <MenuItem value={1}>1st level</MenuItem>
-            <MenuItem value={2}>2nd level</MenuItem>
-            <MenuItem value={3}>3rd level</MenuItem>
-            <MenuItem value={4}>4th level</MenuItem>
-            <MenuItem value={5}>5th level</MenuItem>
-            <MenuItem value={6}>6th level</MenuItem>
-            <MenuItem value={7}>7th level</MenuItem>
-            <MenuItem value={8}>8th level</MenuItem>
-            <MenuItem value={9}>9th level</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+      <ToolBar search={search} onSearchChange={onSearchChange} selectedClass={selectedClass} onClassChange={onClassChange} level={level} onLevelChange={onLevelChange}/>
       <List sx={{width: 400}}>
         {(typeof spells === 'undefined') ?
         (<p>Loading...</p>
