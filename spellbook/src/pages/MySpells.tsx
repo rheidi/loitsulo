@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardHeader, Grid, IconButton, Link, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, Grid, IconButton, Link, Popper, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
@@ -13,6 +13,15 @@ const MySpells = () => {
     })
   }
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const handleConfirmPopper = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget)
+  };
+
+  const open = Boolean(anchorEl)
+  const id = open ? 'simple-popper' : undefined
+
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant='h1'>My spellbook</Typography>
@@ -24,7 +33,14 @@ const MySpells = () => {
       ) : (
         <Box>
           <Typography variant='h5'>Selected spells.</Typography>
-          <Button onClick={() => setSelectedSpells([])}>Clear all</Button>
+          <Button onClick={handleConfirmPopper}>Clear all</Button>
+          <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+              Do you want to remove all selected spells?
+              <Button onClick={() => setSelectedSpells([])}>Yes!</Button>
+              <Button onClick={() => setAnchorEl(null)}>Not really</Button>
+            </Box>
+          </Popper>
           <Grid container spacing={2} sx={{pt:1}}>
             {selectedSpells.map((s) => (
               <Grid item key={s.slug} width={300}>
