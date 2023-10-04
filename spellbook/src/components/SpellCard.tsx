@@ -88,6 +88,12 @@ const SpellCard = ({spell}: {spell: Spell}) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{spell.desc}</Typography>
+          {(spell.higher_level) ?
+            (
+              <Typography paragraph>At higher levels: {spell.higher_level}</Typography>
+            ) : (
+              <></>
+            )}
         </CardContent>
       </Collapse>
     </Card>

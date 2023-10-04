@@ -80,7 +80,12 @@ export const SpellInfo = ({spell, open, setOpen}: SpellInfoProps) => {
           Ritual: {spell.ritual}<br />
         </Typography>
         <Typography paragraph>{spell.desc}</Typography>
-        <Typography paragraph>At higher levels: {spell.higher_level}</Typography>
+        {(spell.higher_level) ?
+          (
+            <Typography paragraph>At higher levels: {spell.higher_level}</Typography>
+          ) : (
+            <></>
+          )}        
         <Typography sx={{ mb: 1.5 }} color="text.secondary">{spell.dnd_class}</Typography>
       </DialogContent>
       
