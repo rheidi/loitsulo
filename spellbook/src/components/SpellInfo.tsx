@@ -88,7 +88,6 @@ export const SpellInfo = ({spell, open, setOpen}: SpellInfoProps) => {
           )}        
         <Typography sx={{ mb: 1.5 }} color="text.secondary">{spell.dnd_class}</Typography>
       </DialogContent>
-      
     </Dialog>
   )
 }

@@ -57,7 +57,7 @@ const AllSpells = () => {
         newSelectedSpells = [...prevSelectedSpells, s]
       }
 
-      return newSelectedSpells
+      return newSelectedSpells.sort((a, b) => a.spell_level - b.spell_level)
     })
   }
   const [open, setOpen] = useState(false)

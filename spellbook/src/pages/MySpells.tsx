@@ -1,8 +1,7 @@
-import { Box, Button, Card, CardActions, CardContent, CardHeader, Collapse, Grid, IconButton, IconButtonProps, Link, Popper, Typography, styled } from '@mui/material'
+import { Box, Button, Grid, Link, Popper, Typography } from '@mui/material'
 
 import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
-import { Spell } from '../types/Spell'
 import SpellCard from '../components/SpellCard'
 
 const MySpells = () => {
