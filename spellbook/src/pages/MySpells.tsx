@@ -1,8 +1,25 @@
-import { Box, Button, Card, CardContent, CardHeader, Grid, IconButton, Link, Popper, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, CardHeader, Collapse, Grid, IconButton, IconButtonProps, Link, Popper, Typography, styled } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import CopyrightIcon from '@mui/icons-material/Copyright';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useContext } from 'react'
 import SpellContext from '../components/SpellContext'
 import { Spell } from '../types/Spell'
+
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean;
+}
+
+const ExpandMore = styled((props: ExpandMoreProps) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 const MySpells = () => {
   const { selectedSpells, setSelectedSpells } = useContext(SpellContext)
@@ -21,6 +38,12 @@ const MySpells = () => {
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popper' : undefined
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <Box sx={{ p: 2 }}>
@@ -48,39 +71,54 @@ const MySpells = () => {
                   <CardHeader
                     title={s.name}
                     action={
-                      <IconButton role='undefined' onClick={handleRemove(s)} aria-label="remove spell">
+                      <IconButton role='remove' onClick={handleRemove(s)} aria-label="remove spell">
                         <CloseIcon />
                       </IconButton>
                     }
                   />
                   <CardContent>
                     <Typography sx={{ mb: 1.2 }} color="text.secondary">{s.level} {s.school.toLowerCase()}</Typography>
-                    <Typography gutterBottom variant="body2">
+                    <Typography variant="subtitle2">
                       Casting time: {s.casting_time}<br />
                       Range: {s.range}<br />
                       Components: {s.components}<br />
                       {(s.requires_material_components) ?
                         (
-                          <Typography variant="body2">Materials: {s.material}<br /></Typography>
+                          <Typography variant="subtitle2">Materials: {s.material}<br /></Typography>
                         ) : (
                           <></>
                         )}
                       Duration: {s.duration}<br />
-                      {(s.requires_concentration) ?
-                        (
-                          <Typography variant="body2">Requires concentration<br /></Typography>
-                        ) : (
-                          <></>
-                        )}
-                      {(s.can_be_cast_as_ritual) ?
-                        (
-                          <Typography variant="body2">Can be cast as a ritual<br /></Typography>
-                        ) : (
-                          <></>
-                        )}
+                      
                     </Typography>
-                    <Typography paragraph>{s.desc}</Typography>
                   </CardContent>
+                  <CardActions disableSpacing>
+                    {(s.requires_concentration) ?
+                      (
+                        <CopyrightIcon />
+                      ) : (
+                        <></>
+                      )}
+                    {(s.can_be_cast_as_ritual) ?
+                      (
+                        <Typography variant="subtitle2">R</Typography>
+                      ) : (
+                        <></>
+                      )}
+                    <ExpandMore
+                      expand={expanded}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="show more"
+                    >
+                      <ExpandMoreIcon />
+                    </ExpandMore>
+                  </CardActions>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                      <Typography paragraph>{s.desc}</Typography>
+                    </CardContent>
+                  </Collapse>
                 </Card>
               </Grid>
             ))}
