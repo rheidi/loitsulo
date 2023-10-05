@@ -1,11 +1,12 @@
 import { Card, CardHeader, IconButton, CardContent, Typography, CardActions, Collapse, IconButtonProps, styled } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import CopyrightIcon from '@mui/icons-material/Copyright';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Spell } from "../types/Spell"
 import { useContext } from "react";
 import SpellContext from "./SpellContext";
 import React from "react";
+import CIcon from "./CIcon";
+import RIcon from "./RIcon";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -66,13 +67,13 @@ const SpellCard = ({spell}: {spell: Spell}) => {
       <CardActions disableSpacing>
         {(spell.requires_concentration) ?
           (
-            <CopyrightIcon />
+            <CIcon />
           ) : (
             <></>
           )}
         {(spell.can_be_cast_as_ritual) ?
           (
-            <Typography variant="subtitle2">®</Typography>
+            <RIcon />
           ) : (
             <></>
           )}
